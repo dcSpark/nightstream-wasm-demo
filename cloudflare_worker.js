@@ -2,8 +2,6 @@ const COI_HEADERS = {
   "Cross-Origin-Opener-Policy": "same-origin",
   "Cross-Origin-Embedder-Policy": "require-corp",
   "Cross-Origin-Resource-Policy": "same-origin",
-  // Avoid mixing cached wasm/js with fresh deploys (can break threads init).
-  "Cache-Control": "no-store",
 };
 
 function withCoiHeaders(response) {

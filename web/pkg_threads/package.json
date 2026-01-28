@@ -5,12 +5,11 @@
   "files": [
     "neo_fold_demo_bg.wasm",
     "neo_fold_demo.js",
-    "neo_fold_demo.d.ts",
-    "workerHelpers.no-bundler.js"
+    "neo_fold_demo.d.ts"
   ],
   "main": "neo_fold_demo.js",
   "types": "neo_fold_demo.d.ts",
   "sideEffects": [
-    "./workerHelpers.no-bundler.js"
+    "./snippets/*"
   ]
 }
