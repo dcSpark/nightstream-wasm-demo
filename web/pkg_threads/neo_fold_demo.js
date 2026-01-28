@@ -1,5 +1,5 @@
 /* @ts-self-types="./neo_fold_demo.d.ts" */
-import { startWorkers } from './snippets/wasm-bindgen-rayon-38edf6e439f6d70d/src/workerHelpers.no-bundler.js';
+import { startWorkers } from './workerHelpers.no-bundler.js';
 
 /**
  * Opaque proof handle returned by `NeoFoldSession::fold_and_prove()`.

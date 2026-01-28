@@ -397,9 +397,25 @@ async function main() {
         activeWasmThreads = n;
         log(`Initializing wasm thread pool (${n} threads)...`);
         setBadge(statusThreadsEl, `Threads: initializing (${n})…`, "warn");
-        await wasm.init_thread_pool(n);
-        log("Wasm thread pool ready.");
-        setBadge(statusThreadsEl, `Threads: enabled (${n})`, "ok");
+        try {
+          await wasm.init_thread_pool(n);
+          log("Wasm thread pool ready.");
+          setBadge(statusThreadsEl, `Threads: enabled (${n})`, "ok");
+        } catch (e) {
+          log(`Threads init failed: ${String(e)}`);
+          log("Falling back to single-thread bundle.");
+
+          const single = await import(WASM_SINGLE);
+          window.__neo_fold_wasm = single;
+          await single.default();
+          single.init_panic_hook();
+
+          activeWasmBundle = "pkg";
+          activeWasmThreads = 0;
+          setBadge(statusBundleEl, `Bundle: pkg (${threadsHint})`);
+          await loadBuildInfo("pkg");
+          setBadge(statusThreadsEl, "Threads: disabled (init failed)", "warn");
+        }
       }
     } else {
       if (threadsForcedOff) {

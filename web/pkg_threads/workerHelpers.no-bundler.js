@@ -13,6 +13,9 @@
 
 // This file is kept similar to workerHelpers.js, but intended to be used in
 // a bundlerless ES module environment (which has a few differences).
+//
+// NOTE: This demo vendors the helper at a stable path so deployments don't
+// break if the wasm-bindgen snippets hash changes.
 
 function waitForMsgType(target, type) {
   return new Promise((resolve) => {
@@ -29,7 +32,8 @@ function waitForMsgType(target, type) {
 // messages on the page.
 waitForMsgType(self, "wasm_bindgen_worker_init").then(async (data) => {
   const pkg = await import(data.mainJS);
-  await pkg.default(data.module, data.memory);
+  // Use the object-form init to avoid deprecated positional params.
+  await pkg.default({ module_or_path: data.module, memory: data.memory });
   postMessage({ type: "wasm_bindgen_worker_ready" });
   pkg.wbg_rayon_start_worker(data.receiver);
 });
