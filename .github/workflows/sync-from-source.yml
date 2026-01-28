@@ -15,7 +15,7 @@ jobs:
       - name: Fetch from source repo
         run: |
           git clone --depth 1 --filter=blob:none --sparse \
-            https://github.com/LFDT-Nightstream/halo3.git \
+            https://github.com/LFDT-Nightstream/Nightstream.git \
             source-repo
           cd source-repo
           git sparse-checkout set demos/wasm-demo
